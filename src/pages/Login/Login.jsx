@@ -2,9 +2,12 @@ import { Button, Checkbox, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import styles from "./Login.module.css";
 import { login } from "../../mockServer/httpRequests";
+import { useContext } from "react";
+import { NotificationContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 // Login page for admins
-export default function Login() {
+export default function Login({}) {
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
@@ -12,13 +15,18 @@ export default function Login() {
             password: "",
         },
     });
+    const { notifySuccess, notifyError } = useContext(NotificationContext);
+    const nav = useNavigate();
 
     const onLogin = async (formValues) => {
         try {
             // Mock server call to login
             const res = await login(formValues);
+            notifySuccess(res.message);
             console.log(res);
+            nav("/admin");
         } catch (error) {
+            notifyError(error.message);
             console.log(error);
         }
     };
