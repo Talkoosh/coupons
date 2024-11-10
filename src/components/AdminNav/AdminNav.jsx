@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Group } from "@mantine/core";
 import { IconPlus, IconList, IconLogout, IconPencil } from "@tabler/icons-react";
 import classes from "./AdminNav.module.css";
-
+import { useNavigate } from "react-router-dom";
 const data = [
-    { link: "", label: "All Coupons", icon: IconList },
-    { link: "", label: "New Coupon", icon: IconPlus },
-    { link: "", label: "Edit Coupon", icon: IconPencil },
+    { link: "", label: "All Coupons", icon: IconList, page: "" },
+    { link: "", label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
 ];
 
 export function AdminNav({ loggedInUser }) {
-    const [active, setActive] = useState("Billing");
+    const [active, setActive] = useState("All Coupons");
+    const nav = useNavigate();
 
     const links = data.map((item) => (
         <a
@@ -21,6 +21,7 @@ export function AdminNav({ loggedInUser }) {
             onClick={(event) => {
                 event.preventDefault();
                 setActive(item.label);
+                nav(item.page);
             }}
         >
             <item.icon className={classes.linkIcon} stroke={1.5} />
