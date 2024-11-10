@@ -1,7 +1,7 @@
 import { Button, Checkbox, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import styles from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { login } from "../../mockServer/httpRequests";
 
 // Login page for admins
 export default function Login() {
@@ -13,9 +13,19 @@ export default function Login() {
         },
     });
 
+    const onLogin = async (formValues) => {
+        try {
+            // Mock server call to login
+            const res = await login(formValues);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className={styles.container}>
-            <form className={styles.form} onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form className={styles.form} onSubmit={form.onSubmit((values) => onLogin(values))}>
                 <TextInput
                     style={{ width: "300px" }}
                     withAsterisk
@@ -38,9 +48,6 @@ export default function Login() {
                         Login
                     </Button>
                 </Group>
-                <Link to="/user">
-                    <Button>Enter coupon</Button>
-                </Link>
             </form>
         </div>
     );
