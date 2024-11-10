@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -8,7 +8,7 @@ import { createContext } from "react";
 
 import Login from "./pages/Login/Login";
 import MainPage from "./pages/MainPage/MainPage";
-import { AdminPanel } from "./pages/AdminPanel/AdminPanel";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -20,14 +20,20 @@ const notifyError = (message) => {
 };
 
 export default function App() {
+    // State for holding current logged in user
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
     return (
         <MantineProvider>
             <NotificationContext.Provider value={{ notifySuccess, notifyError }}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<MainPage />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/admin" element={<AdminPanel />} />
+                        <Route
+                            path="/login"
+                            element={<Login setLoggedInUser={setLoggedInUser} />}
+                        />
+                        <Route path="/admin" element={<AdminPanel loggedInUser={loggedInUser} />} />
                         <Route path="/user" element={<div>TBD</div>} />
                     </Routes>
                 </BrowserRouter>

@@ -3,11 +3,17 @@ import { users } from "./data";
 //Mock login function
 export const login = async (payload) => {
     await mimicDelay();
+
     const { username, password } = payload;
-    if (users.find((user) => user.username === username && user.password === password)) {
+    const user = users.find(
+        (user) => user.username === username && user.password === password
+    );
+
+    if (user) {
         return {
             message: "Login Successful",
             code: 200,
+            data: user,
         };
     } else {
         throw {

@@ -1,4 +1,4 @@
-import { Button, Checkbox, Group, TextInput } from "@mantine/core";
+import { Button, Group, TextInput, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import styles from "./Login.module.css";
 import { login } from "../../mockServer/httpRequests";
@@ -7,7 +7,7 @@ import { NotificationContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 // Login page for admins
-export default function Login({}) {
+export default function Login({ setLoggedInUser }) {
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
@@ -20,10 +20,17 @@ export default function Login({}) {
 
     const onLogin = async (formValues) => {
         try {
+            // Alert user if either username or password were not provided
+            if (!formValues.username || !formValues.password) {
+                notifyError("Username and password must be provided!");
+                return;
+            }
             // Mock server call to login
             const res = await login(formValues);
+            // Set logged in user state to the found user
+            setLoggedInUser(res.data);
             notifySuccess(res.message);
-            console.log(res);
+            // Navigate to the admin panel
             nav("/admin");
         } catch (error) {
             notifyError(error.message);
@@ -42,7 +49,7 @@ export default function Login({}) {
                     key={form.key("username")}
                     {...form.getInputProps("username")}
                 />
-                <TextInput
+                <PasswordInput
                     style={{ width: "300px" }}
                     withAsterisk
                     label="Password"
@@ -51,7 +58,7 @@ export default function Login({}) {
                     {...form.getInputProps("password")}
                 />
 
-                <Group justify="flex-end" mt="md">
+                <Group mt="md">
                     <Button type="submit" color="green">
                         Login
                     </Button>
