@@ -9,6 +9,7 @@ import { createContext } from "react";
 import Login from "./pages/Login/Login";
 import MainPage from "./pages/MainPage/MainPage";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import AddUser from "./components/AddUser/AddUser";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -21,7 +22,10 @@ const notifyError = (message) => {
 
 export default function App() {
     // State for holding current logged in user
-    const [loggedInUser, setLoggedInUser] = useState(null);
+    const [loggedInUser, setLoggedInUser] = useState({
+        username: "Admin",
+        password: "cooltest123",
+    });
 
     return (
         <MantineProvider>
@@ -37,6 +41,7 @@ export default function App() {
                             <Route index element={<div>All</div>} />
                             <Route path="coupon-add" element={<div>Add Coupon</div>} />
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
+                            <Route path="user-add" element={<AddUser />} />
                         </Route>
                         <Route path="/user" element={<div>TBD</div>} />
                     </Routes>

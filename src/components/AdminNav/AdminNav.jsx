@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Group } from "@mantine/core";
-import { IconPlus, IconList, IconLogout, IconPencil } from "@tabler/icons-react";
+import { IconPlus, IconList, IconLogout, IconUser } from "@tabler/icons-react";
 import classes from "./AdminNav.module.css";
 import { useNavigate } from "react-router-dom";
 const data = [
     { link: "", label: "All Coupons", icon: IconList, page: "" },
     { link: "", label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
+    { link: "", label: "Add User", icon: IconUser, page: "/admin/user-add" },
 ];
 
 export function AdminNav({ loggedInUser }) {
