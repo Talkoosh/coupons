@@ -7,10 +7,10 @@ import { DateInput } from "@mantine/dates";
 import styles from "./NewCoupon.module.css";
 import { addCoupon } from "../../mockServer/httpRequests";
 
-export default function NewCoupon({ loggedInUser }) {
+export default function NewCoupon({ loggedInUser, fetchCoupons }) {
     const { notifyError, notifySuccess } = useContext(NotificationContext);
     const form = useForm({
-        mode: "uncontrollerd",
+        mode: "controlled",
         initialValues: {
             userId: loggedInUser.id,
             code: "",
@@ -48,6 +48,8 @@ export default function NewCoupon({ loggedInUser }) {
             notifySuccess(res.message);
             // Reset form values
             form.reset();
+            // Re-fetch coupons so state is always updated
+            fetchCoupons();
         } catch (error) {
             notifyError(error.message);
             console.log(error);
@@ -60,14 +62,12 @@ export default function NewCoupon({ loggedInUser }) {
                     style={{ width: "300px" }}
                     label="Coupon Code"
                     placeholder="SUMMER2024"
-                    key={form.key("code")}
                     {...form.getInputProps("code")}
                 />
 
                 <Textarea
                     label="Coupon Description"
                     placeholder="Summer Sale Coupon"
-                    key={form.key("description")}
                     {...form.getInputProps("description")}
                 />
 
@@ -88,7 +88,6 @@ export default function NewCoupon({ loggedInUser }) {
                             }
                             label="Amount"
                             placeholder="20"
-                            key={form.key("amount")}
                             {...form.getInputProps("amount")}
                         />
                     </div>
@@ -103,7 +102,6 @@ export default function NewCoupon({ loggedInUser }) {
                     {form.getValues().hasExpirationDate ? (
                         <DateInput
                             label="Expiration Date"
-                            key={form.key("expirationDate")}
                             {...form.getInputProps("expirationDate")}
                         />
                     ) : (
@@ -126,7 +124,6 @@ export default function NewCoupon({ loggedInUser }) {
                         <NumberInput
                             label="Uses amount"
                             placeholder="10"
-                            key={form.key("usesLeft")}
                             {...form.getInputProps("usesLeft")}
                         />
                     ) : (

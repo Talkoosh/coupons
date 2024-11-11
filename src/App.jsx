@@ -34,7 +34,6 @@ export default function App() {
     });
     // State for holding all coupons
     const [coupons, setCouopons] = useState([]);
-    console.log("🚀 ~ App ~ coupons:", coupons);
 
     // Fetch coupons on app entry
     useEffect(() => {
@@ -69,7 +68,12 @@ export default function App() {
                             <Route index element={<CouponsList coupons={coupons} />} />
                             <Route
                                 path="coupon-add"
-                                element={<NewCoupon loggedInUser={loggedInUser} />}
+                                element={
+                                    <NewCoupon
+                                        fetchCoupons={fetchCoupons}
+                                        loggedInUser={loggedInUser}
+                                    />
+                                }
                             />
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
                             <Route path="user-add" element={<AddUser />} />

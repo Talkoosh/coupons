@@ -65,7 +65,7 @@ export const addCoupon = async (payload) => {
 
 export const getAllCoupons = async () => {
     await mimicDelay();
-    return coupons;
+    return [...coupons];
 };
 
 //Mimic actual request delay
