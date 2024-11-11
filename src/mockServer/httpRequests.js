@@ -34,7 +34,8 @@ export const addUser = async (payload) => {
         };
     }
 
-    users.push({ username, password });
+    // Add user and generate id based on current timestamp
+    users.push({ id: Date.now(), username, password });
     return {
         message: "User added successfuly!",
         code: 201,

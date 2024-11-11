@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login";
 import MainPage from "./pages/MainPage/MainPage";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import AddUser from "./components/AddUser/AddUser";
+import NewCoupon from "./components/NewCoupon/NewCoupon";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -47,7 +48,10 @@ export default function App() {
                             }
                         >
                             <Route index element={<div>All</div>} />
-                            <Route path="coupon-add" element={<div>Add Coupon</div>} />
+                            <Route
+                                path="coupon-add"
+                                element={<NewCoupon loggedInUser={loggedInUser} />}
+                            />
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
                             <Route path="user-add" element={<AddUser />} />
                         </Route>
