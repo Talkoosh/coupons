@@ -4,3 +4,5 @@ export const users = [
         password: "cooltest123",
     },
 ];
+
+export const coupons = [];

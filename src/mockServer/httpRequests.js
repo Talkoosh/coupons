@@ -1,4 +1,4 @@
-import { users } from "./data";
+import { coupons, users } from "./data";
 
 //Mock login function
 export const login = async (payload) => {
@@ -38,6 +38,24 @@ export const addUser = async (payload) => {
     users.push({ id: Date.now(), username, password });
     return {
         message: "User added successfuly!",
+        code: 201,
+    };
+};
+
+export const addCoupon = async (payload) => {
+    await mimicDelay();
+
+    const existingCoupon = coupons.find((coupon) => coupon.code === payload.code);
+    if (existingCoupon) {
+        throw {
+            message: "Coupon with the same code already exists",
+            code: 409,
+        };
+    }
+
+    coupons.push(payload);
+    return {
+        message: "Coupon added successfuly!",
         code: 201,
     };
 };

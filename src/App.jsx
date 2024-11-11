@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -26,6 +28,7 @@ export default function App() {
     const [loggedInUser, setLoggedInUser] = useState({
         username: "Admin",
         password: "cooltest123",
+        id: 1,
     });
 
     return (
