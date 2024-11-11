@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Group } from "@mantine/core";
 import { IconPlus, IconList, IconLogout, IconUser } from "@tabler/icons-react";
 import classes from "./AdminNav.module.css";
 import { useNavigate } from "react-router-dom";
+import { NotificationContext } from "../../App";
 const data = [
     { link: "", label: "All Coupons", icon: IconList, page: "" },
     { link: "", label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
     { link: "", label: "Add User", icon: IconUser, page: "/admin/user-add" },
 ];
 
-export function AdminNav({ loggedInUser }) {
+export function AdminNav({ loggedInUser, setLoggedInUser }) {
     const [active, setActive] = useState("All Coupons");
     const nav = useNavigate();
+    const { notifySuccess } = useContext(NotificationContext);
 
     const links = data.map((item) => (
         <a
@@ -40,7 +42,16 @@ export function AdminNav({ loggedInUser }) {
             </div>
 
             <div className={classes.footer}>
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                <a
+                    href="#"
+                    className={classes.link}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        setLoggedInUser(null);
+                        notifySuccess("Logged out successfuly");
+                        nav("/");
+                    }}
+                >
                     <IconLogout className={classes.linkIcon} stroke={1.5} />
                     <span>Logout</span>
                 </a>

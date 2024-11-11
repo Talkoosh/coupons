@@ -37,7 +37,15 @@ export default function App() {
                             path="/login"
                             element={<Login setLoggedInUser={setLoggedInUser} />}
                         />
-                        <Route path="/admin" element={<AdminPanel loggedInUser={loggedInUser} />}>
+                        <Route
+                            path="/admin"
+                            element={
+                                <AdminPanel
+                                    setLoggedInUser={setLoggedInUser}
+                                    loggedInUser={loggedInUser}
+                                />
+                            }
+                        >
                             <Route index element={<div>All</div>} />
                             <Route path="coupon-add" element={<div>Add Coupon</div>} />
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />

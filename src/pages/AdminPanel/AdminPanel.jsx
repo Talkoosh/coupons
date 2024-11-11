@@ -3,11 +3,11 @@ import { AdminNav } from "../../components/AdminNav/AdminNav";
 import styles from "./AdminPanel.module.css";
 import { Outlet } from "react-router-dom";
 
-export default function AdminPanel({ loggedInUser }) {
+export default function AdminPanel({ loggedInUser, setLoggedInUser }) {
     return (
         <div className={styles.container}>
             <div className={styles.navContainer}>
-                <AdminNav loggedInUser={loggedInUser} />
+                <AdminNav setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />
             </div>
             <div className={styles.pageContainer}>
                 <Outlet />
