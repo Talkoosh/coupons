@@ -1,6 +1,7 @@
 import { coupons, users } from "./data";
 
-//Mock login function
+// Mock functions for server requests:
+
 export const login = async (payload) => {
     await mimicDelay();
 
@@ -45,6 +46,7 @@ export const addUser = async (payload) => {
 export const addCoupon = async (payload) => {
     await mimicDelay();
 
+    // Check if coupon already exists based on coupon code
     const existingCoupon = coupons.find((coupon) => coupon.code === payload.code);
     if (existingCoupon) {
         throw {
@@ -53,11 +55,17 @@ export const addCoupon = async (payload) => {
         };
     }
 
+    // Add coupon
     coupons.push(payload);
     return {
         message: "Coupon added successfuly!",
         code: 201,
     };
+};
+
+export const getAllCoupons = async () => {
+    await mimicDelay();
+    return coupons;
 };
 
 //Mimic actual request delay

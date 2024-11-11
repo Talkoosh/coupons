@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 
@@ -13,6 +13,8 @@ import MainPage from "./pages/MainPage/MainPage";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import AddUser from "./components/AddUser/AddUser";
 import NewCoupon from "./components/NewCoupon/NewCoupon";
+import CouponsList from "./components/CouponsList/CouponsList";
+import { getAllCoupons } from "./mockServer/httpRequests";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -30,6 +32,20 @@ export default function App() {
         password: "cooltest123",
         id: 1,
     });
+    // State for holding all coupons
+    const [coupons, setCouopons] = useState([]);
+    console.log("🚀 ~ App ~ coupons:", coupons);
+
+    // Fetch coupons on app entry
+    useEffect(() => {
+        fetchCoupons();
+    }, []);
+
+    // Fetches coupons from server and saves in state
+    const fetchCoupons = async () => {
+        const res = await getAllCoupons();
+        setCouopons(res);
+    };
 
     return (
         <MantineProvider>
@@ -50,7 +66,7 @@ export default function App() {
                                 />
                             }
                         >
-                            <Route index element={<div>All</div>} />
+                            <Route index element={<CouponsList coupons={coupons} />} />
                             <Route
                                 path="coupon-add"
                                 element={<NewCoupon loggedInUser={loggedInUser} />}
