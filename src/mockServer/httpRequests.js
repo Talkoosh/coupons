@@ -74,12 +74,41 @@ export const deleteCoupon = async (couponToDeleteId) => {
     // Find coupon index in the array
     const couponIndex = coupons.findIndex((coupon) => coupon.id === couponToDeleteId);
 
+    // If coupon wasn't found - throw error
+    if (couponIndex < 0) {
+        throw {
+            message: "Could not find coupon to delete",
+            code: 404,
+        };
+    }
+
     // Remove found index from array
     coupons.splice(couponIndex, 1);
 
     return {
         message: "Coupon Deleted Successfuly",
         code: 200,
+    };
+};
+
+export const editCoupon = async (updatedCoupon) => {
+    await mimicDelay();
+
+    const couponIndex = coupons.findIndex((coupon) => coupon.id === updatedCoupon.id);
+
+    // If coupon wasn't found - throw error
+    if (couponIndex < 0) {
+        throw {
+            message: "Could not find coupon to update",
+            code: 404,
+        };
+    }
+
+    coupons.splice(couponIndex, 1, updatedCoupon);
+
+    return {
+        message: "Coupon updated successfuly",
+        code: 204,
     };
 };
 

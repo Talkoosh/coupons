@@ -1,12 +1,16 @@
-import { Button, Table } from "@mantine/core";
+import { Button, Table, Modal } from "@mantine/core";
 import { IconX, IconCheck, IconCurrencyShekel, IconPercentage } from "@tabler/icons-react";
 import styles from "./CouponsList.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NotificationContext } from "../../App";
 import { deleteCoupon } from "../../mockServer/httpRequests";
+import { useDisclosure } from "@mantine/hooks";
+import EditCoupon from "../EditCoupon/EditCoupon";
 
 export default function CouponstList({ coupons, fetchCoupons }) {
     const { notifyError, notifySuccess } = useContext(NotificationContext);
+    const [editModalOpen, { open, close }] = useDisclosure(false);
+    const [couponToEdit, setCouponToEdit] = useState(null);
 
     const onDeleteCoupon = async (couponId) => {
         try {
@@ -35,7 +39,7 @@ export default function CouponstList({ coupons, fetchCoupons }) {
             </Table.Thead>
             <Table.Tbody>
                 {coupons.map((coupon) => (
-                    <Table.Tr>
+                    <Table.Tr key={coupon.id}>
                         <Table.Td>{coupon.createdAt.toLocaleDateString()}</Table.Td>
                         <Table.Td>{coupon.code}</Table.Td>
                         <Table.Td>{coupon.description}</Table.Td>
@@ -72,12 +76,22 @@ export default function CouponstList({ coupons, fetchCoupons }) {
                                 >
                                     Delete
                                 </Button>
-                                <Button>Edit</Button>
+                                <Button
+                                    onClick={() => {
+                                        setCouponToEdit(coupon);
+                                        open();
+                                    }}
+                                >
+                                    Edit
+                                </Button>
                             </div>
                         </Table.Td>
                     </Table.Tr>
                 ))}
             </Table.Tbody>
+            <Modal opened={editModalOpen} onClose={close} title="Edit Coupon" centered>
+                <EditCoupon fetchCoupons={fetchCoupons} close={close} coupon={couponToEdit} />
+            </Modal>
         </Table>
     );
 }
