@@ -5,8 +5,6 @@ import { DateTimePicker } from "@mantine/dates";
 import CouponstList from "../CouponsList/CouponsList";
 import * as XLSX from "xlsx";
 
-// TODO: check entire app for console logs, maps with keys
-
 export default function Reports({ coupons, users }) {
     const [sortedCoupons, setSortedCoupons] = useState([...coupons]);
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -32,7 +30,7 @@ export default function Reports({ coupons, users }) {
         setSortedCoupons(couponsToSort);
     }, [selectedUserId, fromDate, toDate]);
 
-    // Create excel file with coupons data
+    // Create excel file with coupons data - using XLSX library
     const exportToExcelFile = () => {
         const worksheet = XLSX.utils.json_to_sheet(sortedCoupons);
         const workbook = XLSX.utils.book_new();

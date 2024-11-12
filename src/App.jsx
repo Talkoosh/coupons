@@ -34,6 +34,7 @@ export default function App() {
         password: "cooltest123",
         id: "1",
     });
+
     // State for holding all coupons
     const [coupons, setCoupons] = useState([]);
 
@@ -52,6 +53,7 @@ export default function App() {
         setCoupons(res);
     };
 
+    // Fetches users from server and saves in state
     const fetchUsers = async () => {
         const res = await getAllUsers();
         setUsers(res);
@@ -63,41 +65,16 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<MainPage />} />
-                        <Route
-                            path="/login"
-                            element={<Login setLoggedInUser={setLoggedInUser} />}
-                        />
-                        <Route
-                            path="/admin"
-                            element={
-                                <AdminPanel
-                                    setLoggedInUser={setLoggedInUser}
-                                    loggedInUser={loggedInUser}
-                                />
-                            }
-                        >
-                            <Route
-                                index
-                                element={
-                                    <CouponsList fetchCoupons={fetchCoupons} coupons={coupons} />
-                                }
-                            />
-                            <Route
-                                path="coupon-add"
-                                element={
-                                    <NewCoupon
-                                        fetchCoupons={fetchCoupons}
-                                        loggedInUser={loggedInUser}
-                                    />
-                                }
-                            />
-                            <Route path="user-add" element={<AddUser fetchUsers={fetchUsers} />} />
-                            <Route
-                                path="reports"
-                                element={<Reports users={users} coupons={coupons} />}
-                            />
-                        </Route>
+                        <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} />} />
                         <Route path="/redeem-coupon" element={<RedeemCoupon />} />
+
+                        {/* Admin Routes */}
+                        <Route path="/admin" element={<AdminPanel setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />}>
+                            <Route index element={<CouponsList fetchCoupons={fetchCoupons} coupons={coupons} />} />
+                            <Route path="coupon-add" element={<NewCoupon fetchCoupons={fetchCoupons} loggedInUser={loggedInUser} />} />
+                            <Route path="user-add" element={<AddUser fetchUsers={fetchUsers} />} />
+                            <Route path="reports" element={<Reports users={users} coupons={coupons} />} />
+                        </Route>
                     </Routes>
                 </BrowserRouter>
                 <ToastContainer position="bottom-right" />

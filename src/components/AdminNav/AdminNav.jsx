@@ -5,6 +5,7 @@ import classes from "./AdminNav.module.css";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../App";
 
+// Options for Admin pages
 const data = [
     { label: "All Coupons", icon: IconList, page: "" },
     { label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
@@ -12,11 +13,13 @@ const data = [
     { label: "Reports", icon: IconReportAnalytics, page: "/admin/reports" },
 ];
 
+// Admin navigation panel
 export function AdminNav({ loggedInUser, setLoggedInUser }) {
     const [active, setActive] = useState("All Coupons");
     const nav = useNavigate();
     const { notifySuccess } = useContext(NotificationContext);
 
+    // Array of links to Admin pages
     const links = data.map((item) => (
         <a
             className={classes.link}

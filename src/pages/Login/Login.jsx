@@ -25,11 +25,14 @@ export default function Login({ setLoggedInUser }) {
                 notifyError("Username and password must be provided!");
                 return;
             }
+
             // Mock server call to login
             const res = await login(formValues);
+
             // Set logged in user state to the found user
             setLoggedInUser(res.data);
             notifySuccess(res.message);
+
             // Navigate to the admin panel
             nav("/admin");
         } catch (error) {

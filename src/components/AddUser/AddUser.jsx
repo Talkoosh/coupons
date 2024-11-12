@@ -22,10 +22,12 @@ export default function AddUser({ fetchUsers }) {
                 notifyError("Username and password must be provided!");
                 return;
             }
+
             // Attempt to add resource and alert user accordingly
             const res = await addUser(formValues);
             notifySuccess(res.message);
-            // Reset form values if successful
+
+            // Reset form values if successful and re-fetch users
             form.reset();
             fetchUsers();
         } catch (error) {

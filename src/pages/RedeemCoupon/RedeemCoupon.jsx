@@ -7,10 +7,16 @@ import { NotificationContext } from "../../App";
 import { editCoupon, getCoupon } from "../../mockServer/httpRequests";
 
 export default function RedeemCoupon() {
+    // nonStackableUsed - State for keeping track if a non stackable coupon was used
     const [nonStackableUsed, setNonStackableUsed] = useState(false);
+
+    // usedCoupons - State for holding a list of used coupons
     const [usedCoupons, setUsedCoupons] = useState([]);
+
     const [total, setTotal] = useState(100);
+
     const [couponCode, setCouponCode] = useState("");
+
     const { notifySuccess, notifyError } = useContext(NotificationContext);
 
     const onRedeemCoupon = async () => {
@@ -43,9 +49,7 @@ export default function RedeemCoupon() {
 
             // Coupon passed all checks - redeem it
             setTotal((prevTotal) => {
-                let newTotal = coupon.byPercentage
-                    ? prevTotal * (1 - coupon.amount / 100)
-                    : prevTotal - coupon.amount;
+                let newTotal = coupon.byPercentage ? prevTotal * (1 - coupon.amount / 100) : prevTotal - coupon.amount;
 
                 if (newTotal < 0) {
                     newTotal = 0;
@@ -76,11 +80,7 @@ export default function RedeemCoupon() {
                 Cart Total: {total}
                 <IconCurrencyShekel size={18} />
             </h2>
-            <TextInput
-                label="Coupon Code"
-                value={couponCode}
-                onChange={(event) => setCouponCode(event.target.value)}
-            />
+            <TextInput label="Coupon Code" value={couponCode} onChange={(event) => setCouponCode(event.target.value)} />
             <Button onClick={onRedeemCoupon}>Redeem Coupon</Button>
 
             <ul className={styles.usedList}>

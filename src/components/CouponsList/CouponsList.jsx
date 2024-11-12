@@ -9,7 +9,9 @@ import EditCoupon from "../EditCoupon/EditCoupon";
 
 export default function CouponstList({ page, coupons, fetchCoupons }) {
     const { notifyError, notifySuccess } = useContext(NotificationContext);
+
     const [editModalOpen, { open, close }] = useDisclosure(false);
+
     const [couponToEdit, setCouponToEdit] = useState(null);
 
     const onDeleteCoupon = async (couponId) => {
@@ -45,27 +47,17 @@ export default function CouponstList({ page, coupons, fetchCoupons }) {
                         <Table.Td>{coupon.description}</Table.Td>
                         <Table.Td>
                             {coupon.amount}
-                            {coupon.byPercentage ? (
-                                <IconPercentage size={12} />
-                            ) : (
-                                <IconCurrencyShekel size={12} />
-                            )}
+                            {coupon.byPercentage ? <IconPercentage size={12} /> : <IconCurrencyShekel size={12} />}
                         </Table.Td>
                         <Table.Td>
-                            {coupon.hasExpirationDate ? (
-                                coupon.expirationDate.toLocaleDateString()
-                            ) : (
-                                <IconX color="red" size={14}></IconX>
-                            )}
+                            {coupon.hasExpirationDate ? coupon.expirationDate.toLocaleDateString() : <IconX color="red" size={14}></IconX>}
                         </Table.Td>
                         <Table.Td>
-                            {coupon.isStackable ? (
-                                <IconCheck color="green" size={14}></IconCheck>
-                            ) : (
-                                <IconX color="red" size={14}></IconX>
-                            )}
+                            {coupon.isStackable ? <IconCheck color="green" size={14}></IconCheck> : <IconX color="red" size={14}></IconX>}
                         </Table.Td>
                         <Table.Td>{coupon.isLimited ? coupon.usesLeft : "Unlimited"}</Table.Td>
+
+                        {/* Only show edit and delete action buttons if CouponsList was not rendered from reports page */}
                         {page !== "reports" ? (
                             <Table.Td>
                                 <div className={styles.actionBtnsContainer}>
@@ -93,6 +85,8 @@ export default function CouponstList({ page, coupons, fetchCoupons }) {
                     </Table.Tr>
                 ))}
             </Table.Tbody>
+
+            {/* Edit coupon modal */}
             <Modal opened={editModalOpen} onClose={close} title="Edit Coupon" centered>
                 <EditCoupon fetchCoupons={fetchCoupons} close={close} coupon={couponToEdit} />
             </Modal>
