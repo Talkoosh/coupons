@@ -67,7 +67,9 @@ export default function Reports({ coupons, users }) {
                 onChange={setToDate}
             />
             <CouponstList page={"reports"} coupons={sortedCoupons} />
-            <Button onClick={exportToExcelFile}>EXCEL</Button>
+            <Button className={styles.excelBtn} onClick={exportToExcelFile}>
+                Export to excel
+            </Button>
         </div>
     );
 }

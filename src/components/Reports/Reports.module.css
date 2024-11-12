@@ -4,3 +4,7 @@
     flex-direction: column;
     align-items: center;
 }
+
+.excelBtn {
+    margin-top: 25px;
+}
