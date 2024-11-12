@@ -33,12 +33,30 @@ export default function NewCoupon({ loggedInUser, fetchCoupons }) {
                 return;
             }
 
+            if (newCoupon.amount < 0) {
+                notifyError("Amount must be higher than 0");
+                return;
+            }
+
             // Reset values if they're not necessary
             if (!newCoupon.hasExpirationDate) {
                 newCoupon.expirationDate = null;
             }
+            // Notify user if expiration date has not been provided
+            else if (!newCoupon.expirationDate) {
+                notifyError("Coupon has expiration date - it must be provided");
+                return;
+            }
+
             if (!newCoupon.isLimited) {
                 newCoupon.usesLeft = 0;
+            }
+            // Notify user if uses left has not been provided
+            else if (!newCoupon.usesLeft || newCoupon.usesLeft < 0) {
+                notifyError(
+                    "Coupon has limited uses - uses left field must be provided with at least 0"
+                );
+                return;
             }
 
             // Add creation date and time to coupon
