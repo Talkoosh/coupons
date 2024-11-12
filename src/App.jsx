@@ -15,6 +15,7 @@ import AddUser from "./components/AddUser/AddUser";
 import NewCoupon from "./components/NewCoupon/NewCoupon";
 import CouponsList from "./components/CouponsList/CouponsList";
 import { getAllCoupons } from "./mockServer/httpRequests";
+import RedeemCoupon from "./pages/RedeemCoupon/RedeemCoupon";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -83,7 +84,7 @@ export default function App() {
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
                             <Route path="user-add" element={<AddUser />} />
                         </Route>
-                        <Route path="/user" element={<div>TBD</div>} />
+                        <Route path="/redeem-coupon" element={<RedeemCoupon />} />
                     </Routes>
                 </BrowserRouter>
                 <ToastContainer position="bottom-left" />

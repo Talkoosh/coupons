@@ -13,8 +13,7 @@ export default function MainPage() {
                     I Am An Admin
                 </Button>
             </Link>
-            <Link to="/user">
-                {/* TODO: NAVIGATE TO ENTER COUPON PAGE */}
+            <Link to="/redeem-coupon">
                 <Button className={styles.button}>I Am A Customer</Button>
             </Link>
         </div>
