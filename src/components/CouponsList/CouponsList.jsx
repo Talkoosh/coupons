@@ -7,7 +7,7 @@ import { deleteCoupon } from "../../mockServer/httpRequests";
 import { useDisclosure } from "@mantine/hooks";
 import EditCoupon from "../EditCoupon/EditCoupon";
 
-export default function CouponstList({ coupons, fetchCoupons }) {
+export default function CouponstList({ page, coupons, fetchCoupons }) {
     const { notifyError, notifySuccess } = useContext(NotificationContext);
     const [editModalOpen, { open, close }] = useDisclosure(false);
     const [couponToEdit, setCouponToEdit] = useState(null);
@@ -66,26 +66,30 @@ export default function CouponstList({ coupons, fetchCoupons }) {
                             )}
                         </Table.Td>
                         <Table.Td>{coupon.isLimited ? coupon.usesLeft : "Unlimited"}</Table.Td>
-                        <Table.Td>
-                            <div className={styles.actionBtnsContainer}>
-                                <Button
-                                    onClick={() => {
-                                        onDeleteCoupon(coupon.id);
-                                    }}
-                                    color="red"
-                                >
-                                    Delete
-                                </Button>
-                                <Button
-                                    onClick={() => {
-                                        setCouponToEdit(coupon);
-                                        open();
-                                    }}
-                                >
-                                    Edit
-                                </Button>
-                            </div>
-                        </Table.Td>
+                        {page !== "reports" ? (
+                            <Table.Td>
+                                <div className={styles.actionBtnsContainer}>
+                                    <Button
+                                        onClick={() => {
+                                            onDeleteCoupon(coupon.id);
+                                        }}
+                                        color="red"
+                                    >
+                                        Delete
+                                    </Button>
+                                    <Button
+                                        onClick={() => {
+                                            setCouponToEdit(coupon);
+                                            open();
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                </div>
+                            </Table.Td>
+                        ) : (
+                            ""
+                        )}
                     </Table.Tr>
                 ))}
             </Table.Tbody>

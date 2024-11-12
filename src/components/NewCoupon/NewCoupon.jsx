@@ -104,6 +104,7 @@ export default function NewCoupon({ loggedInUser, fetchCoupons }) {
                     />
                     {form.getValues().hasExpirationDate ? (
                         <DateInput
+                            valueFormat="DD/MM/YYYY HH:mm:ss"
                             label="Expiration Date"
                             {...form.getInputProps("expirationDate")}
                         />
