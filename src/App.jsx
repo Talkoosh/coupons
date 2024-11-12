@@ -43,6 +43,7 @@ export default function App() {
     // Fetch coupons on app entry
     useEffect(() => {
         fetchCoupons();
+        fetchUsers();
     }, []);
 
     // Fetches coupons from server and saves in state
@@ -90,7 +91,7 @@ export default function App() {
                                     />
                                 }
                             />
-                            <Route path="user-add" element={<AddUser />} />
+                            <Route path="user-add" element={<AddUser fetchUsers={fetchUsers} />} />
                             <Route path="reports" element={<Reports coupons={coupons} />} />
                         </Route>
                         <Route path="/redeem-coupon" element={<RedeemCoupon />} />

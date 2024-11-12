@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { NotificationContext } from "../../App";
 import { addUser } from "../../mockServer/httpRequests";
 
-export default function AddUser() {
+export default function AddUser({ fetchUsers }) {
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
@@ -27,6 +27,7 @@ export default function AddUser() {
             notifySuccess(res.message);
             // Reset form values if successful
             form.reset();
+            fetchUsers();
         } catch (error) {
             notifyError(error.message);
             console.log(error);
