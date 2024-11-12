@@ -54,7 +54,7 @@ export default function App() {
 
     const fetchUsers = async () => {
         const res = await getAllUsers();
-        return res;
+        setUsers(res);
     };
 
     return (
@@ -92,7 +92,10 @@ export default function App() {
                                 }
                             />
                             <Route path="user-add" element={<AddUser fetchUsers={fetchUsers} />} />
-                            <Route path="reports" element={<Reports coupons={coupons} />} />
+                            <Route
+                                path="reports"
+                                element={<Reports users={users} coupons={coupons} />}
+                            />
                         </Route>
                         <Route path="/redeem-coupon" element={<RedeemCoupon />} />
                     </Routes>
