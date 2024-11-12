@@ -32,7 +32,7 @@ export default function App() {
     const [loggedInUser, setLoggedInUser] = useState({
         username: "Admin",
         password: "cooltest123",
-        id: 1,
+        id: "1",
     });
     // State for holding all coupons
     const [coupons, setCoupons] = useState([]);
