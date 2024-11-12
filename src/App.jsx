@@ -29,11 +29,7 @@ const notifyError = (message) => {
 
 export default function App() {
     // State for holding current logged in user
-    const [loggedInUser, setLoggedInUser] = useState({
-        username: "Admin",
-        password: "cooltest123",
-        id: "1",
-    });
+    const [loggedInUser, setLoggedInUser] = useState([]);
 
     // State for holding all coupons
     const [coupons, setCoupons] = useState([]);

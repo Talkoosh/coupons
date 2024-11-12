@@ -124,6 +124,7 @@ export const getCoupon = async (code) => {
         };
     }
 
+    // Check if the requested coupon is expired
     if (coupon.hasExpirationDate && new Date() > coupon.expirationDate) {
         throw {
             message: "Coupon expired",
@@ -131,6 +132,7 @@ export const getCoupon = async (code) => {
         };
     }
 
+    // Check if the requested coupon can't be used
     if (coupon.isLimited && coupon.usesLeft <= 0) {
         throw {
             message: "No uses left for coupon",
@@ -152,6 +154,6 @@ export const getAllUsers = async () => {
 // Mimic actual request delay
 const mimicDelay = () => {
     return new Promise((resolve) => {
-        setTimeout(resolve, 800);
+        setTimeout(resolve, 600);
     });
 };
