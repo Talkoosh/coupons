@@ -65,7 +65,12 @@ export default function App() {
                                 />
                             }
                         >
-                            <Route index element={<CouponsList coupons={coupons} />} />
+                            <Route
+                                index
+                                element={
+                                    <CouponsList fetchCoupons={fetchCoupons} coupons={coupons} />
+                                }
+                            />
                             <Route
                                 path="coupon-add"
                                 element={

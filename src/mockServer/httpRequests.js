@@ -68,7 +68,22 @@ export const getAllCoupons = async () => {
     return [...coupons];
 };
 
-//Mimic actual request delay
+export const deleteCoupon = async (couponToDeleteId) => {
+    await mimicDelay();
+
+    // Find coupon index in the array
+    const couponIndex = coupons.findIndex((coupon) => coupon.id === couponToDeleteId);
+
+    // Remove found index from array
+    coupons.splice(couponIndex, 1);
+
+    return {
+        message: "Coupon Deleted Successfuly",
+        code: 200,
+    };
+};
+
+// Mimic actual request delay
 const mimicDelay = () => {
     return new Promise((resolve) => {
         setTimeout(resolve, 800);

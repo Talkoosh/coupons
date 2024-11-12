@@ -1,8 +1,25 @@
 import { Button, Table } from "@mantine/core";
 import { IconX, IconCheck, IconCurrencyShekel, IconPercentage } from "@tabler/icons-react";
 import styles from "./CouponsList.module.css";
+import { useContext } from "react";
+import { NotificationContext } from "../../App";
+import { deleteCoupon } from "../../mockServer/httpRequests";
 
-export default function CouponstList({ coupons }) {
+export default function CouponstList({ coupons, fetchCoupons }) {
+    const { notifyError, notifySuccess } = useContext(NotificationContext);
+
+    const onDeleteCoupon = async (couponId) => {
+        try {
+            const res = await deleteCoupon(couponId);
+            notifySuccess(res.message);
+            // Fetch updated coupons from mock server after deleting a coupon
+            fetchCoupons();
+        } catch (error) {
+            console.log(error);
+            notifyError(error.message);
+        }
+    };
+
     return (
         <Table>
             <Table.Thead>
@@ -47,7 +64,14 @@ export default function CouponstList({ coupons }) {
                         <Table.Td>{coupon.isLimited ? coupon.usesLeft : "Unlimited"}</Table.Td>
                         <Table.Td>
                             <div className={styles.actionBtnsContainer}>
-                                <Button color="red">Delete</Button>
+                                <Button
+                                    onClick={() => {
+                                        onDeleteCoupon(coupon.id);
+                                    }}
+                                    color="red"
+                                >
+                                    Delete
+                                </Button>
                                 <Button>Edit</Button>
                             </div>
                         </Table.Td>
