@@ -112,6 +112,38 @@ export const editCoupon = async (updatedCoupon) => {
     };
 };
 
+export const getCoupon = async (code) => {
+    await mimicDelay();
+
+    const coupon = coupons.find((coupon) => coupon.code === code);
+
+    if (!coupon) {
+        throw {
+            message: "Coupon not found",
+            code: 404,
+        };
+    }
+
+    if (coupon.hasExpirationDate && new Date() > coupon.expirationDate) {
+        throw {
+            message: "Coupon expired",
+            code: 400,
+        };
+    }
+
+    if (coupon.isLimited && coupon.usesLeft <= 0) {
+        throw {
+            message: "No uses left for coupon",
+            code: 400,
+        };
+    }
+
+    return {
+        data: coupon,
+        code: 200,
+    };
+};
+
 // Mimic actual request delay
 const mimicDelay = () => {
     return new Promise((resolve) => {
