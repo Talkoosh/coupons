@@ -1,5 +1,6 @@
-import { Table } from "@mantine/core";
+import { Button, Table } from "@mantine/core";
 import { IconX, IconCheck, IconCurrencyShekel, IconPercentage } from "@tabler/icons-react";
+import styles from "./CouponsList.module.css";
 
 export default function CouponstList({ coupons }) {
     return (
@@ -44,6 +45,12 @@ export default function CouponstList({ coupons }) {
                             )}
                         </Table.Td>
                         <Table.Td>{coupon.isLimited ? coupon.usesLeft : "Unlimited"}</Table.Td>
+                        <Table.Td>
+                            <div className={styles.actionBtnsContainer}>
+                                <Button color="red">Delete</Button>
+                                <Button>Edit</Button>
+                            </div>
+                        </Table.Td>
                     </Table.Tr>
                 ))}
             </Table.Tbody>
