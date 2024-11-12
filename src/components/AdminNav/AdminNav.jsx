@@ -1,13 +1,15 @@
 import { useContext, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconPlus, IconList, IconLogout, IconUser } from "@tabler/icons-react";
+import { IconPlus, IconList, IconLogout, IconUser, IconReportAnalytics } from "@tabler/icons-react";
 import classes from "./AdminNav.module.css";
 import { useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../App";
+
 const data = [
-    { link: "", label: "All Coupons", icon: IconList, page: "" },
-    { link: "", label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
-    { link: "", label: "Add User", icon: IconUser, page: "/admin/user-add" },
+    { label: "All Coupons", icon: IconList, page: "" },
+    { label: "New Coupon", icon: IconPlus, page: "/admin/coupon-add" },
+    { label: "Add User", icon: IconUser, page: "/admin/user-add" },
+    { label: "Reports", icon: IconReportAnalytics, page: "/admin/reports" },
 ];
 
 export function AdminNav({ loggedInUser, setLoggedInUser }) {
@@ -19,7 +21,6 @@ export function AdminNav({ loggedInUser, setLoggedInUser }) {
         <a
             className={classes.link}
             data-active={item.label === active || undefined}
-            href={item.link}
             key={item.label}
             onClick={(event) => {
                 event.preventDefault();
@@ -43,7 +44,6 @@ export function AdminNav({ loggedInUser, setLoggedInUser }) {
 
             <div className={classes.footer}>
                 <a
-                    href="#"
                     className={classes.link}
                     onClick={(event) => {
                         event.preventDefault();

@@ -81,6 +81,7 @@ export default function App() {
                                     />
                                 }
                             />
+                            <Route path="reports" element={<>asdasd</>} />
                             <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
                             <Route path="user-add" element={<AddUser />} />
                         </Route>
