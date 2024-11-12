@@ -86,7 +86,7 @@ export default function RedeemCoupon() {
             <ul className={styles.usedList}>
                 Used Coupons:
                 {usedCoupons.map((code) => (
-                    <li>{code}</li>
+                    <li key={code}>{code}</li>
                 ))}
             </ul>
         </div>

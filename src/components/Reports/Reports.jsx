@@ -1,21 +1,23 @@
-import { Select } from "@mantine/core";
+import { Button, Select } from "@mantine/core";
 import { useEffect, useState } from "react";
 import styles from "./Reports.module.css";
 import { DateTimePicker } from "@mantine/dates";
 import CouponstList from "../CouponsList/CouponsList";
+import * as XLSX from "xlsx";
+
+// TODO: check entire app for console logs, maps with keys
 
 export default function Reports({ coupons, users }) {
     const [sortedCoupons, setSortedCoupons] = useState([...coupons]);
-    console.log("🚀 ~ Reports ~ sortedCoupons:", sortedCoupons);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
 
+    // Sort coupons whenever a sort value changes
     useEffect(() => {
         let couponsToSort = [...coupons];
 
         if (selectedUserId) {
-            console.log("🚀 ~ useEffect ~ selectedUserId:", selectedUserId);
             couponsToSort = couponsToSort.filter((coupon) => coupon.userId === selectedUserId);
         }
 
@@ -29,6 +31,14 @@ export default function Reports({ coupons, users }) {
 
         setSortedCoupons(couponsToSort);
     }, [selectedUserId, fromDate, toDate]);
+
+    // Create excel file with coupons data
+    const exportToExcelFile = () => {
+        const worksheet = XLSX.utils.json_to_sheet(sortedCoupons);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Coupons");
+        XLSX.writeFile(workbook, `"Coupons".xlsx`);
+    };
 
     return (
         <div className={styles.container}>
@@ -56,9 +66,8 @@ export default function Reports({ coupons, users }) {
                 placeholder="To"
                 onChange={setToDate}
             />
-            <div>
-                <CouponstList page={"reports"} coupons={sortedCoupons} />
-            </div>
+            <CouponstList page={"reports"} coupons={sortedCoupons} />
+            <Button onClick={exportToExcelFile}>EXCEL</Button>
         </div>
     );
 }
