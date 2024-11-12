@@ -87,7 +87,7 @@ export default function App() {
                         <Route path="/redeem-coupon" element={<RedeemCoupon />} />
                     </Routes>
                 </BrowserRouter>
-                <ToastContainer position="bottom-left" />
+                <ToastContainer position="bottom-right" />
             </NotificationContext.Provider>
         </MantineProvider>
     );
