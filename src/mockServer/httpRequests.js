@@ -144,6 +144,11 @@ export const getCoupon = async (code) => {
     };
 };
 
+export const getAllUsers = async () => {
+    await mimicDelay();
+    return [...users];
+};
+
 // Mimic actual request delay
 const mimicDelay = () => {
     return new Promise((resolve) => {

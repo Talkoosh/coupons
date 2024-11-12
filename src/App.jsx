@@ -14,8 +14,9 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import AddUser from "./components/AddUser/AddUser";
 import NewCoupon from "./components/NewCoupon/NewCoupon";
 import CouponsList from "./components/CouponsList/CouponsList";
-import { getAllCoupons } from "./mockServer/httpRequests";
+import { getAllCoupons, getAllUsers } from "./mockServer/httpRequests";
 import RedeemCoupon from "./pages/RedeemCoupon/RedeemCoupon";
+import Reports from "./components/Reports/Reports";
 
 // Context for providing notifications to the entire app
 export const NotificationContext = createContext();
@@ -34,7 +35,10 @@ export default function App() {
         id: 1,
     });
     // State for holding all coupons
-    const [coupons, setCouopons] = useState([]);
+    const [coupons, setCoupons] = useState([]);
+
+    // State for holding all users
+    const [users, setUsers] = useState([]);
 
     // Fetch coupons on app entry
     useEffect(() => {
@@ -44,7 +48,12 @@ export default function App() {
     // Fetches coupons from server and saves in state
     const fetchCoupons = async () => {
         const res = await getAllCoupons();
-        setCouopons(res);
+        setCoupons(res);
+    };
+
+    const fetchUsers = async () => {
+        const res = await getAllUsers();
+        return res;
     };
 
     return (
@@ -81,9 +90,8 @@ export default function App() {
                                     />
                                 }
                             />
-                            <Route path="reports" element={<>asdasd</>} />
-                            <Route path="coupon-edit/:couponId" element={<div>Edit Coupon</div>} />
                             <Route path="user-add" element={<AddUser />} />
+                            <Route path="reports" element={<Reports coupons={coupons} />} />
                         </Route>
                         <Route path="/redeem-coupon" element={<RedeemCoupon />} />
                     </Routes>
