@@ -55,8 +55,8 @@ export const addCoupon = async (payload) => {
         };
     }
 
-    // Add coupon
-    coupons.push(payload);
+    // Add coupon and add ID based on current timestamp
+    coupons.push({ id: Date.now(), ...payload });
     return {
         message: "Coupon added successfuly!",
         code: 201,

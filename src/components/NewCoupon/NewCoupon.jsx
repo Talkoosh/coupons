@@ -40,14 +40,17 @@ export default function NewCoupon({ loggedInUser, fetchCoupons }) {
             if (!newCoupon.isLimited) {
                 newCoupon.usesLeft = 0;
             }
+
             // Add creation date and time to coupon
             newCoupon.createdAt = new Date();
 
             // Create coupon and alert user
             const res = await addCoupon(newCoupon);
             notifySuccess(res.message);
+
             // Reset form values
             form.reset();
+
             // Re-fetch coupons so state is always updated
             fetchCoupons();
         } catch (error) {
